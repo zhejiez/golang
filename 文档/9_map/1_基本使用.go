@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main()  {
+func main() {
 	//定义一个变量,类型为map[int]string
 	var m1 map[int]string
 	fmt.Println("m1 = ", m1)
@@ -23,6 +23,6 @@ func main()  {
 	fmt.Println("len m3 = ", len(m3))
 
 	//初始化,键值是唯一的
-	m4 := map[int]string{1: "mike",2: "go",3: "c++"}
+	m4 := map[int]string{1: "mike", 2: "go", 3: "c++"}
 	fmt.Println("m4 = ", m4)
 }
