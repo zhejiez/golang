@@ -33,7 +33,7 @@ func main() {
 	</noframes>
 </frameset>
 </html>
-` //解析正则表达式,(.*)表示只要这段内容
+` //解析正则表达式,s处理换行,*?重复前面字符,越少越好
 	reg := regexp.MustCompile(`<div>(?s:(.*?))</div>`)
 	if reg == nil {
 		fmt.Println("MustCompile err")
@@ -41,7 +41,7 @@ func main() {
 	}
 	//提取关键信息
 	result := reg.FindAllStringSubmatch(buf, -1)
-	//fmt.Println("result = ", result)
+	fmt.Println("result = ", result)
 
 	//过滤<></>
 	for _, text := range result {
