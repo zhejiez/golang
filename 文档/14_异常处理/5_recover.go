@@ -17,7 +17,7 @@ func testb(x int) {
 		}
 	}() //别忘了(),调用此匿名函数
 	var a [10]int
-	a[x] = 111 //当x为20的时候,导致数组越界产生一个panic
+	a[x] = 111 //当x为11的时候,导致数组越界产生一个panic
 	fmt.Println(a)
 }
 func testc() {
@@ -25,6 +25,6 @@ func testc() {
 }
 func main() {
 	testa()
-	testb(9)
+	testb(11)
 	testc()
 }
