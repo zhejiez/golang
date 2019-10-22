@@ -1,26 +1,20 @@
 package nginxconf
 
 import (
+	"bytes"
 	"fmt"
-	"os"
+	"nginx_reload"
+	"os/exec"
 )
 
-func Nginxconf(path, name string) {
-	f, err := os.OpenFile(path, os.O_APPEND, 0644)
-	var buf string
-	if err != nil {
-		fmt.Println("文件不存在: ", err)
-		return
-	} else {
-		//写入文件
-		buf = fmt.Sprintf("\nif  ($request_uri  ~* \"%s\") {\nreturn 403;\n}\n", name)
-		//f.Seek(201,os.SEEK_SET)
-		//f.WriteString(buf)
-		// 从开头的偏移量开始写入内容
-		n, _ := f.Seek(201, os.SEEK_SET)
-		_, err = f.WriteAt([]byte(buf), n)
-	}
-	//使用完毕,关闭文件
-	defer f.Close()
-	//nginx_reload.Reload()
+func Nginxconf(path, name string) (string, string, error) {
+	var outMsg, errMsg bytes.Buffer
+	cmd := exec.Command("/bin/sh", "-c", fmt.Sprintf(`sed -i 's/404.html;/&\nif  (\$request_uri  \
+~* "%s") {return 403;}/' %s`, name, path))
+	cmd.Stdout = &outMsg
+	cmd.Stderr = &errMsg
+	err := cmd.Run()
+	return outMsg.String(), errMsg.String(), err
+
+	nginx_reload.Reload()
 }
